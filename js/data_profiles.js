@@ -1,0 +1,1 @@
+window.PROFILES = (window.PROFILES_P1||[]).concat(window.PROFILES_P2||[], window.PROFILES_P3||[]);

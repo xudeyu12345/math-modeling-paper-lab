@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学建模优秀论文分析库 · 2021-2025</title>
+<style>
+:root{
+  --bg:#0f1420; --panel:#171e2e; --panel2:#1d2639; --line:#2a3550;
+  --txt:#e8edf7; --sub:#9aa7c2; --accent:#5b9dff; --accent2:#7ee0b8;
+  --gold:#f2c66d; --red:#ff8a8a; --purple:#c9a7ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:14px;line-height:1.65}
+header{padding:22px 28px 14px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+header h1{font-size:20px;font-weight:700}
+header .meta{color:var(--sub);font-size:12.5px}
+nav{display:flex;gap:4px;padding:10px 28px;border-bottom:1px solid var(--line);flex-wrap:wrap;background:var(--panel);position:sticky;top:0;z-index:50}
+nav button{background:none;border:none;color:var(--sub);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:14px;font-family:inherit}
+nav button:hover{color:var(--txt);background:var(--panel2)}
+nav button.active{background:var(--accent);color:#0b1020;font-weight:700}
+main{padding:24px 28px;max-width:1400px;margin:0 auto}
+section.page{display:none}
+section.page.active{display:block}
+h2{font-size:17px;margin:6px 0 14px;color:var(--gold)}
+h3{font-size:15px;margin:18px 0 10px;color:var(--accent)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-bottom:22px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card .num{font-size:26px;font-weight:800;color:var(--accent2)}
+.card .lbl{color:var(--sub);font-size:12.5px;margin-top:2px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:18px}
+.bars{display:flex;align-items:flex-end;gap:10px;height:150px;padding-top:10px;flex-wrap:wrap}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1;min-width:52px}
+.bar{width:100%;max-width:64px;background:linear-gradient(180deg,var(--accent),#3a6bbf);border-radius:6px 6px 0 0;position:relative;min-height:3px}
+.bar .v{position:absolute;top:-19px;width:100%;text-align:center;font-size:11.5px;color:var(--sub)}
+.bar-wrap .x{font-size:12px;color:var(--sub);white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--sub);font-weight:600;white-space:nowrap;position:sticky;top:0;background:var(--panel);z-index:5}
+tr.clickable{cursor:pointer}
+tr.clickable:hover td{background:var(--panel2)}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;margin:1px 2px;background:var(--panel2);border:1px solid var(--line);color:var(--sub);white-space:nowrap}
+.tag.m{background:#233a5e;border-color:#33507f;color:#a8c8ff}
+.tag.y{background:#3a2e14;border-color:#6b5426;color:var(--gold)}
+.tag.deep{background:#1e4034;border-color:#2f6b52;color:var(--accent2)}
+.awardA{color:var(--gold);font-weight:700}
+select,input[type=text],input[type=number]{background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:7px 10px;border-radius:8px;font-family:inherit;font-size:13px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.filters label{color:var(--sub);font-size:12.5px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+.block{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+.block h4{font-size:13.5px;color:var(--accent2);margin-bottom:8px}
+.block p{font-size:13px;color:#d5ddef;white-space:pre-wrap}
+.absbox{font-size:12.8px;color:var(--sub);background:var(--panel2);border-left:3px solid var(--accent);padding:12px 14px;border-radius:0 8px 8px 0;max-height:200px;overflow:auto}
+.grid-deep{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.deep-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;cursor:pointer;transition:border-color .15s}
+.deep-card:hover{border-color:var(--accent)}
+.deep-card h4{font-size:14px;margin-bottom:6px;color:var(--txt)}
+.deep-card .sub{font-size:12px;color:var(--sub)}
+.modal-mask{position:fixed;inset:0;background:rgba(5,8,15,.72);display:none;z-index:100;overflow:auto;padding:30px 16px}
+.modal-mask.show{display:block}
+.modal{background:var(--panel);border:1px solid var(--line);border-radius:14px;max-width:900px;margin:0 auto;padding:26px;position:relative}
+.modal .close{position:absolute;top:12px;right:16px;background:none;border:none;color:var(--sub);font-size:22px;cursor:pointer}
+.score-bar{height:10px;border-radius:6px;background:var(--panel2);overflow:hidden;margin:6px 0 12px}
+.score-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:6px}
+.rubric-w{color:var(--gold);font-weight:700;white-space:nowrap}
+ul.tight{padding-left:20px}
+ul.tight li{margin-bottom:6px}
+.play-card h4{color:var(--gold);font-size:14px;margin-bottom:8px}
+.kbd{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:12px}
+.check-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;cursor:pointer;font-size:13.5px}
+.check-row input{margin-top:4px;accent-color:var(--accent2)}
+.foot{color:var(--sub);font-size:12px;padding:18px 28px;border-top:1px solid var(--line);margin-top:20px}
+.hl{color:var(--accent2);font-weight:600}
+</style>
+</head>
+<body>
+<header>
+  <h1>📐 数学建模优秀论文全套分析库</h1>
+  <div class="meta">中国研究生数学建模竞赛 2021–2025 · 189 篇优秀论文结构化画像 · 59 篇代表论文人工精读（每年每题 1–2 篇） · 方法论图谱 · 评分量规 · 自评工具 · ARS全流程评审</div>
+</header>
+<nav id="nav">
+  <button data-page="overview" class="active">总览</button>
+  <button data-page="library">论文库 <span id="libCount"></span></button>
+  <button data-page="deep">深度分析</button>
+  <button data-page="methods">方法论图谱</button>
+  <button data-page="guide">写作指南与量规</button>
+  <button data-page="selfcheck">自评工具</button>
+  <button data-page="eval">论文评价</button>
+</nav>
+<main>
+  <section class="page active" id="page-overview"></section>
+  <section class="page" id="page-library">
+    <div class="filters" id="libFilters"></div>
+    <div class="panel" style="overflow:auto;max-height:640px">
+      <table id="libTable"><thead><tr>
+        <th>年份</th><th>题</th><th>奖级</th><th>标题 / 论文</th><th>方法标签</th><th>结构完整度</th><th>页数</th>
+      </tr></thead><tbody></tbody></table>
+    </div>
+    <div id="libDetail"></div>
+  </section>
+  <section class="page" id="page-deep">
+    <div id="deepList"></div>
+  </section>
+  <section class="page" id="page-methods"></section>
+  <section class="page" id="page-guide"></section>
+  <section class="page" id="page-selfcheck"></section>
+  <section class="page" id="page-eval"></section>
+</main>
+<div class="modal-mask" id="modalMask"><div class="modal"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<div class="foot">数据来源：本机「2.历年获奖作品(04-25年)」目录，189 篇论文全文已提取并结构化。画像 = 自动解析（标题/摘要/方法/结构模块）；深度分析 = 人工精读 59 篇代表论文撰写（每年每题 1–2 篇，2025 D 题因候选扫描件不可读仅 1 篇）。</div>
+<script src="js/data_profiles.js"></script>
+<script src="js/data_analyses.js"></script>
+<script src="js/data_analyses2.js"></script>
+<script src="js/data_synthesis.js"></script>
+<script src="js/evaluator.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

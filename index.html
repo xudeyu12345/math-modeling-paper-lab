@@ -73,12 +73,24 @@ ul.tight li{margin-bottom:6px}
 .check-row input{margin-top:4px;accent-color:var(--accent2)}
 .foot{color:var(--sub);font-size:12px;padding:18px 28px;border-top:1px solid var(--line);margin-top:20px}
 .hl{color:var(--accent2);font-weight:600}
+a.paper-link{color:var(--accent2);text-decoration:none;font-size:12.5px;white-space:nowrap}
+a.paper-link:hover{text-decoration:underline}
+.btn-primary{background:var(--accent);border:none;color:#0b1020;font-weight:700;padding:10px 26px;border-radius:8px;cursor:pointer;font-size:14px;font-family:inherit}
+.btn-primary:disabled{opacity:.45;cursor:default}
+.dropzone{border:2px dashed var(--line);border-radius:14px;padding:44px 20px;text-align:center;color:var(--sub);cursor:pointer;transition:border-color .15s,background .15s;margin-bottom:16px}
+.dropzone:hover,.dropzone.over{border-color:var(--accent);background:rgba(91,157,255,.06)}
+.dropzone .big{font-size:17px;color:var(--txt);margin-bottom:6px}
+.up-file{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+.up-file .fname{font-size:14px;font-weight:600;color:var(--txt);word-break:break-all}
+.up-file .fmeta{font-size:12px;color:var(--sub);margin:4px 0 10px}
+.sim-chip{display:inline-block;background:#1e4034;border:1px solid #2f6b52;color:var(--accent2);border-radius:8px;padding:4px 10px;font-size:12px;margin:2px 4px 2px 0}
+.warn{color:var(--gold);font-size:12.5px}
 </style>
 </head>
 <body>
 <header>
   <h1>📐 数学建模优秀论文全套分析库</h1>
-  <div class="meta">中国研究生数学建模竞赛 2021–2025 · 189 篇优秀论文结构化画像 · 59 篇代表论文人工精读（每年每题 1–2 篇） · 方法论图谱 · 评分量规 · 自评工具 · ARS全流程评审</div>
+  <div class="meta">中国研究生数学建模竞赛 2021–2025 · 189 篇优秀论文结构化画像 · 59 篇代表论文人工精读（每年每题 1–2 篇） · 全文在线阅读 · 方法论图谱 · 评分量规 · 自评工具 · ARS全流程评审 · 上传分析</div>
 </header>
 <nav id="nav">
   <button data-page="overview" class="active">总览</button>
@@ -88,6 +100,7 @@ ul.tight li{margin-bottom:6px}
   <button data-page="guide">写作指南与量规</button>
   <button data-page="selfcheck">自评工具</button>
   <button data-page="eval">论文评价</button>
+  <button data-page="upload">上传分析</button>
 </nav>
 <main>
   <section class="page active" id="page-overview"></section>
@@ -95,7 +108,7 @@ ul.tight li{margin-bottom:6px}
     <div class="filters" id="libFilters"></div>
     <div class="panel" style="overflow:auto;max-height:640px">
       <table id="libTable"><thead><tr>
-        <th>年份</th><th>题</th><th>奖级</th><th>标题 / 论文</th><th>方法标签</th><th>结构完整度</th><th>页数</th>
+        <th>年份</th><th>题</th><th>奖级</th><th>标题 / 论文</th><th>方法标签</th><th>结构完整度</th><th>页数</th><th>全文</th>
       </tr></thead><tbody></tbody></table>
     </div>
     <div id="libDetail"></div>
@@ -107,9 +120,12 @@ ul.tight li{margin-bottom:6px}
   <section class="page" id="page-guide"></section>
   <section class="page" id="page-selfcheck"></section>
   <section class="page" id="page-eval"></section>
+  <section class="page" id="page-upload"></section>
 </main>
 <div class="modal-mask" id="modalMask"><div class="modal"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
-<div class="foot">数据来源：本机「2.历年获奖作品(04-25年)」目录，189 篇论文全文已提取并结构化。画像 = 自动解析（标题/摘要/方法/结构模块）；深度分析 = 人工精读 59 篇代表论文撰写（每年每题 1–2 篇，2025 D 题因候选扫描件不可读仅 1 篇）。</div>
+<div class="foot">数据来源：本机「2.历年获奖作品(04-25年)」目录，189 篇论文全文已提取并结构化。画像 = 自动解析（标题/摘要/方法/结构模块）；深度分析 = 人工精读 59 篇代表论文撰写（每年每题 1–2 篇，2025 D 题因候选扫描件不可读仅 1 篇）。论文全文 PDF 托管于本站 papers/ 目录，点击「全文」即可在线阅读。</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 <script src="js/dp_part1.js"></script>
 <script src="js/dp_part2.js"></script>
 <script src="js/dp_part3.js"></script>
@@ -118,6 +134,7 @@ ul.tight li{margin-bottom:6px}
 <script src="js/data_analyses2.js"></script>
 <script src="js/data_synthesis.js"></script>
 <script src="js/evaluator.js"></script>
+<script src="js/upload.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

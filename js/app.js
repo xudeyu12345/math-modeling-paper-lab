@@ -141,14 +141,16 @@ function renderLib(){
     const d = deepFor(p);
     const mTags = Object.keys(p.methods||{}).slice(0,3).map(m=>`<span class="tag m">${esc(m)}</span>`).join("");
     const title = p.title ? esc(p.title) : `<span style="color:var(--sub)">(${esc(p.file)})</span>`;
+    const fullUrl = `papers/${p.year}/${encodeURIComponent(p.file)}`;
     return `<tr class="clickable" data-id="${p.id}">
       <td>${p.year}</td><td>${p.prob}</td>
       <td class="${p.award==="A"?"awardA":""}">${p.award==="星"?"提名":p.award}</td>
       <td>${title} ${d?'<span class="tag deep">★深度</span>':""}<br><span style="color:var(--sub);font-size:11.5px">${esc(p.file)}</span></td>
       <td>${mTags}</td>
       <td><span class="score-bar" style="width:80px;display:inline-block;vertical-align:middle"><i style="width:${c}%"></i></span> <span style="font-size:11.5px;color:var(--sub)">${c}%</span></td>
-      <td>${p.pages||"-"}</td></tr>`;
-  }).join("") || `<tr><td colspan="7" style="color:var(--sub)">没有匹配的论文</td></tr>`;
+      <td>${p.pages||"-"}</td>
+      <td><a class="paper-link" href="${fullUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 查看</a></td></tr>`;
+  }).join("") || `<tr><td colspan="8" style="color:var(--sub)">没有匹配的论文</td></tr>`;
 }
 $("#libTable").addEventListener("click", e=>{
   const tr = e.target.closest("tr.clickable"); if(!tr) return;
@@ -172,7 +174,7 @@ function showPaperDetail(p, container){
       <span class="tag">奖级: ${p.award==="星"?"数模之星提名":p.award}</span>
       <span class="tag">${p.pages||"-"} 页</span>
       ${d?'<span class="tag deep">★ 已人工精读</span>':""}
-      <span style="color:var(--sub);font-size:12px;margin-left:auto">${esc(p.file)}</span>
+      <a class="paper-link" style="margin-left:auto;font-size:13.5px" href="papers/${p.year}/${encodeURIComponent(p.file)}" target="_blank" rel="noopener">📄 在线查看全文 →</a>
     </div>
     <h3 style="margin-top:0">${esc(p.title||"(标题未能自动识别)")}</h3>
     ${p.kw?`<p style="font-size:12.5px;color:var(--sub);margin-bottom:10px">关键词: ${esc(p.kw)}</p>`:""}
@@ -278,7 +280,7 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
     <div id="scoreOut" style="margin-top:18px"></div>
   </div>
   <div class="panel"><h3>下一步</h3>
-    <p style="font-size:13px;color:#d5ddef">写完自己的论文后, 直接把 PDF/Word 文件发给 Kimi 并说"分析我的建模论文", 我会按本站的量规和 189 篇优秀论文基准, 给出逐维度评分、与优秀论文的差距对照和具体修改建议。</p>
+    <p style="font-size:13px;color:#d5ddef">写完自己的论文后, 直接把 PDF/Word 文件发给 Kimi 并说"分析我的建模论文", 我会按本站的量规和 189 篇优秀论文基准, 给出逐维度评分、与优秀论文的差距对照和具体修改建议。也可以直接用本站「上传分析」页在浏览器本地解析。</p>
   </div>`;
   el.addEventListener("click", e=>{
     if(e.target.id!=="btnScore") return;

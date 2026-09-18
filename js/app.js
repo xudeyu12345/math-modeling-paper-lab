@@ -7,6 +7,8 @@ const $ = s => document.querySelector(s);
 const $$ = s => Array.from(document.querySelectorAll(s));
 const esc = s => (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const ALL_MODS = ["摘要","问题分析","模型假设","符号说明","模型建立","模型求解","灵敏度/稳健性","模型检验","模型评价","参考文献","附录","流程图"];
+// 全文 PDF 托管于 Gitee 仓库 (GitHub Pages 单站点 1GB 限制, 大文件走 Gitee raw)
+const PAPER_BASE = "https://gitee.com/xu-dy/math-modeling-papers/raw/main/papers";
 
 // 深度分析索引: 按 年|题|文件 精确匹配; 年|题 仅用于给未精读论文提示"同年同题有深度分析"
 const deepMap = {}, deepFallback = {};
@@ -141,7 +143,7 @@ function renderLib(){
     const d = deepFor(p);
     const mTags = Object.keys(p.methods||{}).slice(0,3).map(m=>`<span class="tag m">${esc(m)}</span>`).join("");
     const title = p.title ? esc(p.title) : `<span style="color:var(--sub)">(${esc(p.file)})</span>`;
-    const fullUrl = `papers/${p.year}/${encodeURIComponent(p.file)}`;
+    const fullUrl = `${PAPER_BASE}/${p.year}/${encodeURIComponent(p.file)}`;
     return `<tr class="clickable" data-id="${p.id}">
       <td>${p.year}</td><td>${p.prob}</td>
       <td class="${p.award==="A"?"awardA":""}">${p.award==="星"?"提名":p.award}</td>
@@ -174,7 +176,7 @@ function showPaperDetail(p, container){
       <span class="tag">奖级: ${p.award==="星"?"数模之星提名":p.award}</span>
       <span class="tag">${p.pages||"-"} 页</span>
       ${d?'<span class="tag deep">★ 已人工精读</span>':""}
-      <a class="paper-link" style="margin-left:auto;font-size:13.5px" href="papers/${p.year}/${encodeURIComponent(p.file)}" target="_blank" rel="noopener">📄 在线查看全文 →</a>
+      <a class="paper-link" style="margin-left:auto;font-size:13.5px" href="${PAPER_BASE}/${p.year}/${encodeURIComponent(p.file)}" target="_blank" rel="noopener">📄 在线查看全文 →</a>
     </div>
     <h3 style="margin-top:0">${esc(p.title||"(标题未能自动识别)")}</h3>
     ${p.kw?`<p style="font-size:12.5px;color:var(--sub);margin-bottom:10px">关键词: ${esc(p.kw)}</p>`:""}
@@ -189,7 +191,7 @@ function showPaperDetail(p, container){
       <div class="block"><h4>🎯 解决问题思路</h4><p>${esc(d.approach)}</p></div>
       <div class="block"><h4>⭐ 好在哪里</h4><p>${esc(d.strengths)}</p></div>
       <div class="block"><h4>💡 可借鉴之处</h4><p>${esc(d.takeaways)}</p></div>
-    </div>`:`<p style="color:var(--sub);font-size:12.5px">该篇暂无人工精读(每年每题精读 1–2 篇代表), 以上为其自动画像。${deepNear(p)?'可切换至「深度分析」页查看 <b class="hl">'+p.year+" 年 "+p.prob+' 题</b>代表论文的精读。':""}</p>`}
+    </div>`:`<p style="color:var(--sub);font-size:12.5px">该篇暂无人工精读(每年每题精读 1–2 篇代表), 以上为其自动画像。${deepNear(p)?'可切换至「深度分析」页查看 <b class="hl">'+p.year+" 年 "+p.prob+'</b>代表论文的精读。':""}</p>`}
   </div>`;
 }
 
@@ -280,7 +282,7 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeModal(); });
     <div id="scoreOut" style="margin-top:18px"></div>
   </div>
   <div class="panel"><h3>下一步</h3>
-    <p style="font-size:13px;color:#d5ddef">写完自己的论文后, 直接把 PDF/Word 文件发给 Kimi 并说"分析我的建模论文", 我会按本站的量规和 189 篇优秀论文基准, 给出逐维度评分、与优秀论文的差距对照和具体修改建议。也可以直接用本站「上传分析」页在浏览器本地解析。</p>
+    <p style="font-size:13px;color:#d5ddef">写完自己的论文后, 直接把 PDF/Word 文件发给 Kimi 并说"分析我的建模论文", 我会按本站的量规和 189 篇优秀论文基准, 给出逐维度评分、与优秀论文的差距对照和具体修改建议。</p>
   </div>`;
   el.addEventListener("click", e=>{
     if(e.target.id!=="btnScore") return;
